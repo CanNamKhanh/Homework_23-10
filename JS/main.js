@@ -13,6 +13,8 @@ btnEL.addEventListener("click", (e) => {
   const p = document.createElement("p");
   const iconAreaEl = document.createElement("div");
   const addIconEl = document.createElement("i");
+  const allToDoEl = document.querySelectorAll(".js-boxContent .ToDo p");
+
   addIconEl.classList.add(
     "fa-solid",
     "fa-pen-to-square",
@@ -44,26 +46,42 @@ btnEL.addEventListener("click", (e) => {
   // console.log(fixInputEl.value);
   // console.log(fixContentEl);
 
-  if (inputEl.value) {
-    container.appendChild(toDoEl);
-    toDoEl.appendChild(p);
-    toDoEl.classList.add(
-      "ToDo",
-      "bg-[#8758FF]",
-      "py-[0.75rem]",
-      "px-[1rem]",
-      "rounded-[5px]",
-      "w-full",
-      "mb-[1.2rem]",
-      "cursor-pointer",
-      "text-white",
-      "flex",
-      "justify-between",
-      "text-xl"
-    );
-    container.appendChild(fixContentEl);
-    // formEl.classList.add("!hidden");
+  if (!inputEl.value) {
+    return;
   }
+
+  const isExist = Array.from(allToDoEl).some((p) => {
+    return p.textContent.trim() === inputEl.value.trim();
+  });
+
+  if (isExist) {
+    alert(`Task này đã tồn tại!\nVui lòng nhập lại task khác!`);
+    return;
+  }
+
+  // if (inputEl.value) {
+  container.appendChild(toDoEl);
+  toDoEl.appendChild(p);
+  toDoEl.classList.add(
+    "ToDo",
+    "bg-[#8758FF]",
+    "py-[0.75rem]",
+    "px-[1rem]",
+    "rounded-[5px]",
+    "w-full",
+    "mb-[1.2rem]",
+    "cursor-pointer",
+    "text-white",
+    "flex",
+    "justify-between",
+    "text-xl"
+  );
+  container.appendChild(fixContentEl);
+  // formEl.classList.add("!hidden");
+  // }
+
+  // console.log(allToDoEl.textContent);
+  // console.log(inputEl.value.trim());
 
   toDoEl.appendChild(iconAreaEl);
   iconAreaEl.appendChild(addIconEl);
@@ -98,7 +116,7 @@ btnEL.addEventListener("click", (e) => {
     toDoEl.classList.add("!flex");
     newTextEl.textContent = fixInputEl.value;
   });
-  console.log(toDoEl);
+  // console.log(toDoEl);
 
   p.addEventListener("click", (e) => {
     p.classList.toggle("line-through"); //Đã hoàn thành task
